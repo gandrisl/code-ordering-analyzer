@@ -25,7 +25,7 @@ namespace Analyzer.CodeSort
         private readonly AllowMembersOrderingCodeFixProvider _codeFixProvider;
         private readonly AllowMembersOrderingAnalyzer _analyzer;
 
-        private string SortDocument(string source)
+        public string SortDocument(string source)
         {
             var document = CreateDocument(source);
             var analyzerDiagnostics = GetSortedDiagnosticsFromDocuments(_analyzer, new[] { document });
@@ -104,7 +104,8 @@ namespace Analyzer.CodeSort
             var projectId = ProjectId.CreateNewId();
 
             var solution = new AdhocWorkspace()
-                .CurrentSolution;
+                .CurrentSolution
+                .AddProject(projectId, "Ordering", "Ordering", LanguageNames.CSharp);
 
             int count = 0;
             foreach (var source in sources)
